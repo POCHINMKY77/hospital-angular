@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { HospitalComponent } from './components/hospital/hospital';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
+  imports: [HospitalComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

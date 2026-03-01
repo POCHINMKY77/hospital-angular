@@ -1,34 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { HospitalService } from '../../services/hospital';
-import { Hospital } from '../../models/hospital';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hospital',
   standalone: true,
-  imports: [CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './hospital.html',
-  styleUrls: ['./hospital.css']
+  styleUrl: './hospital.css',
 })
-export class HospitalComponent implements OnInit {
+export class HospitalComponent {
+
+  constructor(public hospitalService: HospitalService) { }
   
-  hospitales: Hospital[] = [];
-
-  constructor(private hospitalService: HospitalService) { }
-
   ngOnInit(): void {
-    this.listarHospitales();
+    this.getHospitales(); 
   }
-
-  listarHospitales(): void {
-    this.hospitalService.listarHospitales().subscribe({
-      next: (data) => {
-        this.hospitales = data;
-        console.log('Hospitales obtenidos:', this.hospitales);
+  
+  getHospitales() {
+    this.hospitalService.getHospitales().subscribe(
+      res => {
+        this.hospitalService.hospitales = res;
+        console.log(this.hospitalService.hospitales);
       },
-      error: (error) => {
-        console.error('Error al obtener hospitales:', error);
-      }
-    });
+      err => console.log(err)
+    );
   }
 }
